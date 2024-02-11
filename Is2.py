@@ -1,13 +1,66 @@
 from abc import ABC
 
 class Player:
-    def __init__(self):
-    pass
+    def __init__(self, name):
+        self.name = name
+        self.health = 100 #Initial health value
+        self.inventory = set()
+        self.clues = []
+        self.tasks = []
+
+    def add_to_inventory(self, item):
+        self.inventory.add(item)
+
+    def add_clue(self, clue):
+        self.clues.append(clue)
+
+    def add_task(self, task):
+        self.tasks.append(task)
+    
+player = Player("Player")
+
+print("Player Health:", player.health) # Print initial health value
+
+#Add items to inventory
+player.add_to_inventory("Sword")
+player.add_to_inventory("Shield")
+print("Inventory:", player.inventory)
+
+#Add clues 
+player.add_clue("add clues based on location")
+player.add_clue("")
+print("Clues:", player.clues)
+
+#Add tasks
+player.add_task("")
+player.add_task("")
+print("Tasks:", player.tasks)
 
 
+class Artifact:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
 
-class Artifacts:
-    pass
+artifact1 = Artifact("Orb of Truth", "A mystical ord that reveals hidden secrets when touched.")
+artifact2 = Artifact("Blade of Shadows", "A dagger that can pierce through darkness, able to wound even paranormal adversaries.")
+artifact3 = Artifact("Goblet of Eternal Youth", "A magical goblet which grants immortality to those who drink from it.")
+artifact4 = Artifact("Necklace of Invisibility", "A necklace when worn, cloaks the wearer from the sight of any being.")
+
+print("Artifact 1:", artifact1.name)
+print("Description:", artifact2.description)
+
+print("Artifact 2:", artifact2.name)
+print("Description:", artifact2.description)
+
+print("Artifact 3:", artifact3.name)
+print("Description:", artifact3.description)
+
+print("Artifact 4:", artifact4.name)
+print("Description:", artifact4.name)
+
+    
+pass
 
 
 
@@ -108,7 +161,7 @@ class Archer(Character):
 
     pass
 
-
+#example use
 wizard = Wizard("Dumbledalf")
 goblin = Goblin("Grishnook")
 ranger = Ranger("Aragalt")
@@ -136,14 +189,12 @@ archer.rapid_fire(player)
 
 
 
-#Inventory(set)
+#Inventory(set) above in player class
 
 
 
 
-#Clues(list)
+#Clues(list) above in player class
 
 
-#Tasks(list)
-
-
+#Tasks(list) above in player class
