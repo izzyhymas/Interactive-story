@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 class Player:
     def __init__(self, name):
         self.name = name
-        self.health = 100 
+        self.health = 120 
         self.inventory = set()
         self.tasks = []
 
@@ -168,7 +168,8 @@ def print_slow(text, delay=0.04):
 def main():
     player = Player("Player")
     wizard = Wizard("Dumbledalf")
-    goblin = Goblin("Grishnook")
+    goblin1 = Goblin("Grishnook")
+    goblin2 = Goblin("Snag")
     bandit = Bandit("Aragalt")
     archer = Archer("Hawkolas")
 
@@ -178,6 +179,7 @@ def main():
     temple = Temple()
 
     locations = [forest, mountain, ruin, temple]
+    available_locations = locations[:]
 
     artifact1 = Artifact("Orb of Truth", "A mystical orb that reveals hidden secrets when touched.")
     artifact2 = Artifact("Blade of Shadows", "A dagger that can pierce through darkness, able to wound even paranormal and magical adversaries.")
@@ -189,142 +191,168 @@ def main():
     print_slow("Your Goal is to Recover Four Missing Legendary Artefacts in Different Locations")
     print()
 
-    time.sleep(0.05)
-    chosen_location = input("Choose Which Location You Want to Explore First: Forest | Mountain | Ruin | Temple: ")
-    print()
+    visited_locations = set()
+    collected_artifacts = set()
 
-    chosen_location = chosen_location.lower()
+    while len(visited_locations) < len(locations):
+        chosen_location = input("Choose Which Location You Want To Explore: Forest | Mountain | Ruin | Temple: ").lower()
+        print()
 
-    if chosen_location == "forest":
-        print_slow(f"You Chose The {forest.name}. It is a {forest.description} ")
-    elif chosen_location == "mountain":
-        print_slow(f"You Chose The {mountain.name}. It is a {mountain.description} ")
-    elif chosen_location == "ruin":
-        print_slow(f"You Chose The {ruin.name}. It is a {ruin.description} ")
-    elif chosen_location == "temple":
-        print_slow(f"You Chose The {temple.name}. It is a {temple.description} ")
+        if chosen_location == "forest" and forest not in visited_locations:
+            visited_locations.add(forest)
+            print()
+            print_slow(f"*** LOCATION: {forest.name} ***")
+            print_slow(f"*** DESCRIPTION: {forest.description} ***")
+            print()
+            print_slow("You come to a clearing and to your surprise, Grishnook the goblin spots you from the treeline.")
+            print_slow("He draws his sword and sprints towards you.")
+            print()
+
+            forest.add_character(goblin1)
+
+            print()
+            print_slow("""With less than a few feet remaining, three arrows impale the goblin""")
+            print()
+            forest.add_character(archer)
+            print()
+            archer.attack_player(goblin1)
+            print()
+            print_slow("An archer jumps down from a tree and gives you a nod.")
+            print_slow("He tells you to stay safe and get some sword lessons.")
+
+            print()
+            print_slow("You continue your walk through the timber and notice a strange branch on a fir tree.")
+            print_slow("You take a closer look and realize it's a dagger!")
+            print()
+            print_slow(f"*** {artifact2.name} ***")
+            print()
+        
+            user_input_forest = input(f"Would you like to add the {artifact2.name} to your inventory? Yes | No : ").lower()
+            print()
+
+            if user_input_forest == "yes":
+                player.add_to_inventory(artifact2.name)
+                print_slow(f"{player.name} has obtained the blade of shadows!")
+                print("Player's Inventory:", player.inventory)
+                print()
+            elif user_input_forest == "no":
+                print_slow("You leave the artifact and continue on your adventure.")
+            else:
+                print_slow("Invalid Input. Please enter Yes | No : ")
+
+
+        if chosen_location == "mountain" and mountain not in visited_locations:
+            visited_locations.add(mountain)
+            print_slow(f"*** LOCATION: {mountain.name} ***")
+            print_slow(f"*** DESCRIPTION: {mountain.description} ***")
+            print()
+            print_slow("""The high climb is refreshing, but fatigues you.""")
+            print()
+            print_slow("""You reach the summit, and there lies a spherical glass orb atop a flat boulder.""")
+            print()
+            print_slow(f"*** {artifact1.name} ***")
+            print()
+        
+            user_input_mountain = input(f"Would you like to add the {artifact1.name} to your inventory? Yes | No : ").lower()
+            print()
+
+            if user_input_mountain == "yes":
+                player.add_to_inventory(artifact1.name)
+                print_slow(f"{player.name} has obtained the orb of truth!")
+                time.sleep(0.5)
+                print("Player's Inventory:", player.inventory)
+                print()
+            elif user_input_mountain == "no":
+                print_slow("You leave the artifact and continue on your adventure.")
+            else:
+                print_slow("Invalid Input. Please enter Yes | No : ")
+
+
+        if chosen_location == "ruin" and ruin not in visited_locations:
+            visited_locations.add(ruin)
+            print()
+            print_slow(f"*** LOCATION: {ruin.name} ***")
+            print_slow(f"*** DESCRIPTION: {ruin.description} ***")
+            print()
+            print_slow(ruin.get_challenge())
+            ruin.add_character(bandit)
+            print()
+
+            print_slow("Suddenly, a wizard cloaked in grey steps in front of you and casts a spell on the charging bandit.")
+            ruin.add_character(wizard)
+            print()
+            wizard.cast_spell(bandit)
+            print()
+            print_slow("He tells you to tread lightly in these ruins, and vanishes with a poof into a cloud of smoke.")
+            print_slow("As the smoke cloud disappears, you notice a strange object left where the wizard was standing.")
+            print()
+            print_slow(f"*** {artifact3.name} ***")
+            print()
+
+            user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
+            print()
+
+            if user_input_ruin == "yes":
+                player.add_to_inventory(artifact3.name)
+                print_slow(f"{player.name} has obtained The Goblet of Eternal Youth!")
+                time.sleep(0.5)
+                print("Player's Inventory:", player.inventory)
+                print()
+            elif user_input_ruin == "no":
+                print_slow("You leave the artifact and continue on your adventure.")
+            else:
+                print_slow("Invalid Input. Please enter Yes | No : ")
+
+        if chosen_location == "temple" and temple not in visited_locations:
+            visited_locations.add(temple)
+            print()
+            print_slow(f"*** LOCATION: {temple.name} ***")
+            print_slow(f"*** DESCRIPTION: {temple.description} ***")    
+            print()
+            print_slow("You walk into the towering temple in awe.")
+            print_slow("On the wall are strange petroglyphs, depicting goblins having dominion over the world.")
+            print()
+            print_slow(temple.get_challenge())
+            print_slow("This time, you decide to handle it yourself.") 
+            print()
+            temple.add_character(goblin2)
+            print()
+
+
+            while player.health > 0 and not goblin2.defeated:
+                action = input("Choose One! Attack | Retreat: ").lower()
+                if action == "attack":
+                    player.attack(goblin2)
+                    if not goblin2.defeated and random.random() < 0.7:
+                        goblin2.attack_player(player)
+                elif action == "retreat":
+                    print_slow("You decide the goblin looks too powerful and quickly run out of the Temple and into the trees")
+                    break
+
+            if player.health <= 0:
+                print_slow("You have been defeated! Game Over.")
+            elif not goblin2.defeated:
+                print_slow("You retreat and do not obtain an Artifact ... You are a coward ...")
+            else:
+                print()
+                print_slow("Congratulations! You defeated the goblin and obtained the Necklace of Invisibility.")
+                player.add_to_inventory("Necklace of Invisibility")
+                print()
+                time.sleep(0.05)
+                print("Player's Inventory:", player.inventory)
+
+    available_locations = [location for location in locations if location not in visited_locations]
+
+    for artifact in [artifact1, artifact2, artifact3, artifact4]:
+        if artifact.name in player.inventory:
+            collected_artifacts.add(artifact)
+
+    if len(collected_artifacts) == 4:
+        print()
+        print("Congratulations! You have collected all four artifacts and won the game!")
     else:
-        print_slow("Invalid choice.")
-
-    if chosen_location == "forest":
         print()
-        print_slow("You come to a clearing and to your surprise, Grishnook the goblin spots you from the treeline.")
-        print_slow("He draws his sword and sprints towards you.")
-        print()
-
-        forest.add_character(goblin)
-
-        print()
-        print_slow("""With less than a few feet remaining, three arrows impale the goblin""")
-        print()
-        forest.add_character(archer)
-        print()
-        archer.attack_player(goblin)
-        print()
-        print_slow("An archer jumps down from a tree and gives you a nod.")
-        print_slow("He tells you to stay safe and get some sword lessons.")
-
-        print()
-        print_slow("You continue your walk through the timber and notice a strange branch on a fir tree.")
-        print_slow("You take a closer look and realize it's a dagger!")
-        print()
-        print_slow(f"*** {artifact2.name} ***")
-        print()
-        
-        user_input_forest = input(f"Would you like to add the {artifact2.name} to your inventory? Yes | No : ").lower()
-
-        if user_input_forest == "yes":
-            player.add_to_inventory(artifact2.name)
-            print_slow(f"{player.name} has obtained the blade of shadows!")
-            print("Player's Inventory:", player.inventory)
-        elif user_input_forest == "no":
-            print_slow("You leave the artifact and continue on your adventure.")
-        else:
-            print_slow("Invalid Input. Please enter Yes | No : ")
-
-
-    if chosen_location == "mountain":
-        print_slow("""The high climb is refreshing, but fatigues you.""")
-        print()
-        print_slow("""You reach the summit, and there lies a spherical glass orb atop a flat boulder.""")
-        print()
-        print_slow(f"*** {artifact1.name} ***")
-        
-        user_input_mountain = input(f"Would you like to add the {artifact1.name} to your inventory? Yes | No : ").lower()
-        if user_input_mountain == "yes":
-            player.add_to_inventory(artifact1.name)
-            print_slow(f"{player.name} has obtained the orb of truth!")
-            print()
-            time.sleep(0.5)
-            print("Player's Inventory:", player.inventory)
-        elif user_input_mountain == "no":
-            print_slow("You leave the artifact and continue on your adventure.")
-        else:
-            print_slow("Invalid Input. Please enter Yes | No : ")
-
-
-    if chosen_location == "ruin":
-        print()
-        print_slow(ruin.get_challenge())
-        ruin.add_character(bandit)
-        print()
-
-        print_slow("Suddenly, a wizard cloaked in grey steps in front of you and casts a spell on the charging bandit.")
-        ruin.add_character(wizard)
-        print()
-        wizard.cast_spell(bandit)
-        print()
-        print_slow("He tells you to tread lightly in these ruins, and vanishes with a poof into a cloud of smoke.")
-        print_slow("As the smoke cloud disappears, you notice a strange object left where the wizard was standing.")
-        print()
-        print_slow(f"*** {artifact3.name} ***")
-        print()
-
-        user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
-        if user_input_ruin == "yes":
-            player.add_to_inventory(artifact3.name)
-            print_slow(f"{player.name} has obtained The Goblet of Eternal Youth!")
-            print()
-            time.sleep(0.5)
-            print("Player's Inventory:", player.inventory)
-        elif user_input_ruin == "no":
-            print_slow("You leave the artifact and continue on your adventure.")
-        else:
-            print_slow("Invalid Input. Please enter Yes | No : ")
-
-    if chosen_location == "temple":
-        print()
-        print_slow("You walk into the towering temple in awe.")
-        print_slow("On the wall are strange petroglyphs, depicting goblins having dominion over the world.")
-        print()
-        print_slow(temple.get_challenge())
-        print_slow("This time, you decide to handle it yourself.") 
-        print()
-        temple.add_character(goblin)
-        print()
-
-
-        while player.health > 0 and not goblin.defeated:
-            action = input("Choose One! Attack | Retreat: ").lower()
-            if action == "attack":
-                player.attack(goblin)
-                if not goblin.defeated and random.random() < 0.7:
-                    goblin.attack_player(player)
-            elif action == "retreat":
-                print_slow("You decide the goblin looks too powerful and quickly run out of the Temple and into the trees")
-                break
-
-        if player.health <= 0:
-            print_slow("You have been defeated! Game Over.")
-        elif not goblin.defeated:
-            print_slow("You retreat and do not obtain an Artifact ... You are a coward ...")
-        else:
-            print()
-            print_slow("Congratulations! You defeated the goblin and obtained the Necklace of Invisibility.")
-            player.add_to_inventory("Necklace of Invisibility")
-            print()
-            time.sleep(0.05)
-            print("Player's Inventory:", player.inventory)
+        print("You have failed to collect all four artifacts. Game over.")
 
 
 
