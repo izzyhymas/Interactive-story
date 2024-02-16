@@ -5,15 +5,15 @@ from abc import ABC, abstractmethod
 
 pygame.init()
 
-forest_sound = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/forrest-sound.wav")
-mountian_sound = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/mountainsound.wav")
-ruins_sound = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/ruinssound.wav")
-temple_sound = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/temple-hymn.mp3")
-goblin_growl = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/goblin-sound.wav")
-archer_sound = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/archer-firing.wav")
-sword_draw = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/sword-draw.wav")
-sword_clash = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/sword-clash.wav")
-wizard_vanish = pygame.mixer.Sound("/Users/barretlemire/IS2/Interactive-story/sounds/wizard-vanishing.wav")
+forest_sound = pygame.mixer.Sound("sounds/forrest-sound.wav")
+mountian_sound = pygame.mixer.Sound("sounds/mountainsound.wav")
+ruins_sound = pygame.mixer.Sound("sounds/ruinssound.wav")
+temple_sound = pygame.mixer.Sound("sounds/temple-hymn.mp3")
+goblin_growl = pygame.mixer.Sound("sounds/goblin-sound.wav")
+archer_sound = pygame.mixer.Sound("sounds/archer-firing.wav")
+sword_draw = pygame.mixer.Sound("sounds/sword-draw.wav")
+sword_clash = pygame.mixer.Sound("sounds/sword-clash.wav")
+wizard_vanish = pygame.mixer.Sound("sounds/wizard-vanishing.wav")
 
 
 def play_sound(sound):
