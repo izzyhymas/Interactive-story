@@ -33,6 +33,10 @@ class Artifact:
         self.name = name
         self.description = description
 
+    def display_info(self):
+        print(f"*** {self.name} ***")
+        print(f"*** {self.description} ***")
+
 
 class Character(ABC):
     def __init__(self, name, health, attack):
@@ -99,6 +103,7 @@ class Location(ABC):
     @abstractmethod
     def remove_character(self, character: Character):
         pass
+
 class Forest(Location):
     def __init__(self):
         super().__init__(name="Enchanted Forest", description="Lush Green Forest Full of Magic")
@@ -181,22 +186,24 @@ def main():
     locations = [forest, mountain, ruin, temple]
     available_locations = locations[:]
 
-    artifact1 = Artifact("Orb of Truth", "A mystical orb that reveals hidden secrets when touched.")
-    artifact2 = Artifact("Blade of Shadows", "A dagger that can pierce through darkness, able to wound even paranormal and magical adversaries.")
-    artifact3 = Artifact("Goblet of Eternal Youth", "A magical goblet which grants immortality to those who drink from it.")
-    artifact4 = Artifact("Necklace of Invisibility", "A necklace when worn, cloaks the wearer from the sight of any being.")
+    artifact1 = Artifact("Orb of Truth", "A Mystical Orb That Reveals Hidden Secrets When Touched.")
+    artifact2 = Artifact("Blade of Shadows", "A Dagger That Can Pierce Through Darkness. It is Able to Wound Even Paranormal and Magical Adversaries.")
+    artifact3 = Artifact("Goblet of Eternal Youth", "A Magical Goblet Which Grants Immortality to Those Who Drink From it.")
+    artifact4 = Artifact("Necklace of Invisibility", "A Necklace When Worn, Cloaks the Wearer From the Sight of Any Being.")
 
     print()
-    print_slow("Welcome to 'The Quest of the Legendary Artefact'")
-    print_slow("Your Goal is to Recover Four Missing Legendary Artefacts in Different Locations")
+    print_slow("Welcome to 'The Quest of the Legendary Artifacts'")
+    print_slow("Your Goal is to Recover Four Missing Legendary Artifacts in Different Locations")
     print()
 
     visited_locations = set()
     collected_artifacts = set()
 
+
     while len(visited_locations) < len(locations):
         chosen_location = input("Choose Which Location You Want To Explore: Forest | Mountain | Ruin | Temple: ").lower()
         print()
+
 
         if chosen_location == "forest" and forest not in visited_locations:
             visited_locations.add(forest)
@@ -224,15 +231,15 @@ def main():
             print_slow("You continue your walk through the timber and notice a strange branch on a fir tree.")
             print_slow("You take a closer look and realize it's a dagger!")
             print()
-            print_slow(f"*** {artifact2.name} ***")
+            artifact2.display_info()
             print()
         
-            user_input_forest = input(f"Would you like to add the {artifact2.name} to your inventory? Yes | No : ").lower()
+            user_input_forest = input(f"Would you like to add The {artifact2.name} to your inventory? Yes | No : ").lower()
             print()
 
             if user_input_forest == "yes":
                 player.add_to_inventory(artifact2.name)
-                print_slow(f"{player.name} has obtained the blade of shadows!")
+                print_slow(f"{player.name} has obtained The Blade of Shadows!")
                 print("Player's Inventory:", player.inventory)
                 print()
             elif user_input_forest == "no":
@@ -250,15 +257,15 @@ def main():
             print()
             print_slow("""You reach the summit, and there lies a spherical glass orb atop a flat boulder.""")
             print()
-            print_slow(f"*** {artifact1.name} ***")
+            artifact1.display_info()
             print()
         
-            user_input_mountain = input(f"Would you like to add the {artifact1.name} to your inventory? Yes | No : ").lower()
+            user_input_mountain = input(f"Would you like to add The {artifact1.name} to your inventory? Yes | No : ").lower()
             print()
 
             if user_input_mountain == "yes":
                 player.add_to_inventory(artifact1.name)
-                print_slow(f"{player.name} has obtained the orb of truth!")
+                print_slow(f"{player.name} has obtained The Orb of Truth!")
                 time.sleep(0.5)
                 print("Player's Inventory:", player.inventory)
                 print()
@@ -286,7 +293,7 @@ def main():
             print_slow("He tells you to tread lightly in these ruins, and vanishes with a poof into a cloud of smoke.")
             print_slow("As the smoke cloud disappears, you notice a strange object left where the wizard was standing.")
             print()
-            print_slow(f"*** {artifact3.name} ***")
+            artifact3.display_info()
             print()
 
             user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
@@ -302,6 +309,7 @@ def main():
                 print_slow("You leave the artifact and continue on your adventure.")
             else:
                 print_slow("Invalid Input. Please enter Yes | No : ")
+
 
         if chosen_location == "temple" and temple not in visited_locations:
             visited_locations.add(temple)
@@ -335,11 +343,14 @@ def main():
                 print_slow("You retreat and do not obtain an Artifact ... You are a coward ...")
             else:
                 print()
-                print_slow("Congratulations! You defeated the goblin and obtained the Necklace of Invisibility.")
+                print_slow("Congratulations! You defeated the goblin and obtained The Necklace of Invisibility.")
+                print()
+                artifact4.display_info()
                 player.add_to_inventory("Necklace of Invisibility")
                 print()
                 time.sleep(0.05)
                 print("Player's Inventory:", player.inventory)
+                print()
 
     available_locations = [location for location in locations if location not in visited_locations]
 
@@ -349,11 +360,10 @@ def main():
 
     if len(collected_artifacts) == 4:
         print()
-        print("Congratulations! You have collected all four artifacts and won the game!")
+        print("Congratulations! You have collected all four Legendary Artifacts and won the game!")
     else:
         print()
-        print("You have failed to collect all four artifacts. Game over.")
-
+        print("You have failed to collect all four Legendary Artifacts. Game over.")
 
 
 if __name__ == "__main__":
