@@ -234,18 +234,22 @@ def main():
             artifact2.display_info()
             print()
         
-            user_input_forest = input(f"Would you like to add The {artifact2.name} to your inventory? Yes | No : ").lower()
-            print()
-
-            if user_input_forest == "yes":
-                player.add_to_inventory(artifact2.name)
-                print_slow(f"{player.name} has obtained The Blade of Shadows!")
-                print("Player's Inventory:", player.inventory)
+            while True:
+                user_input_forest = input(f"Would you like to add The {artifact2.name} to your inventory? Yes | No : ").lower()
                 print()
-            elif user_input_forest == "no":
-                print_slow("You leave the artifact and continue on your adventure.")
-            else:
-                print_slow("Invalid Input. Please enter Yes | No : ")
+
+                if user_input_forest == "yes":
+                    player.add_to_inventory(artifact2.name)
+                    print_slow(f"{player.name} has obtained The Blade of Shadows!")
+                    print("Player's Inventory:", player.inventory)
+                    print()
+                elif user_input_forest == "no":
+                    print_slow("You leave the artifact and continue on your adventure.")
+                else:
+                    print_slow("Invalid Input. Please enter Yes | No : ")
+                    continue
+                break
+                    
 
 
         if chosen_location == "mountain" and mountain not in visited_locations:
@@ -260,19 +264,22 @@ def main():
             artifact1.display_info()
             print()
         
-            user_input_mountain = input(f"Would you like to add The {artifact1.name} to your inventory? Yes | No : ").lower()
-            print()
-
-            if user_input_mountain == "yes":
-                player.add_to_inventory(artifact1.name)
-                print_slow(f"{player.name} has obtained The Orb of Truth!")
-                time.sleep(0.5)
-                print("Player's Inventory:", player.inventory)
+            while True:
+                user_input_mountain = input(f"Would you like to add The {artifact1.name} to your inventory? Yes | No : ").lower()
                 print()
-            elif user_input_mountain == "no":
-                print_slow("You leave the artifact and continue on your adventure.")
-            else:
-                print_slow("Invalid Input. Please enter Yes | No : ")
+
+                if user_input_mountain == "yes":
+                    player.add_to_inventory(artifact1.name)
+                    print_slow(f"{player.name} has obtained The Orb of Truth!")
+                    time.sleep(0.5)
+                    print("Player's Inventory:", player.inventory)
+                    print()
+                elif user_input_mountain == "no":
+                    print_slow("You leave the artifact and continue on your adventure.")
+                else:
+                    print_slow("Invalid Input. Please enter Yes | No : ")
+                    continue
+                break
 
 
         if chosen_location == "ruin" and ruin not in visited_locations:
@@ -296,20 +303,22 @@ def main():
             artifact3.display_info()
             print()
 
-            user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
-            print()
-
-            if user_input_ruin == "yes":
-                player.add_to_inventory(artifact3.name)
-                print_slow(f"{player.name} has obtained The Goblet of Eternal Youth!")
-                time.sleep(0.5)
-                print("Player's Inventory:", player.inventory)
+            while True:
+                user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
                 print()
-            elif user_input_ruin == "no":
-                print_slow("You leave the artifact and continue on your adventure.")
-            else:
-                print_slow("Invalid Input. Please enter Yes | No : ")
 
+                if user_input_ruin == "yes":
+                    player.add_to_inventory(artifact3.name)
+                    print_slow(f"{player.name} has obtained The Goblet of Eternal Youth!")
+                    time.sleep(0.5)
+                    print("Player's Inventory:", player.inventory)
+                    print()
+                elif user_input_ruin == "no":
+                    print_slow("You leave the artifact and continue on your adventure.")
+                else:
+                    print_slow("Invalid Input. Please enter Yes | No : ")
+                    continue
+                break
 
         if chosen_location == "temple" and temple not in visited_locations:
             visited_locations.add(temple)
