@@ -12,9 +12,6 @@ class Player:
     def add_to_inventory(self, item):
         self.inventory.add(item)
 
-    def add_task(self, task):
-        self.tasks.append(task)
-
     def take_damage(self, damage):
         self.health -= damage
         if self.health <= 0:
@@ -38,7 +35,7 @@ class Artifact:
         print(f"*** {self.description} ***")
 
 
-class Character(ABC):
+class Character:
     def __init__(self, name, health, attack):
         self.name = name
         self.health = health
@@ -62,9 +59,6 @@ class Character(ABC):
 class Wizard(Character):
     def __init__(self, name):
         super().__init__(name, health=150, attack=70)
-
-    def get_challenge(self):
-        return "You see a powerful wizard in the distance"
 
     def cast_spell(self, character):
         damage = 70
@@ -96,11 +90,9 @@ class Location(ABC):
     def get_challenge(self):
         pass
 
-    @abstractmethod
     def add_character(self, character: Character):
         pass
 
-    @abstractmethod
     def remove_character(self, character: Character):
         pass
 
@@ -110,7 +102,7 @@ class Forest(Location):
         self.characters = []
 
     def get_challenge(self):
-        return super().get_challenge()
+        print("Grishnook the goblin spots you from the treeline")
     
     def add_character(self, character: Character):
         self.characters.append(character)
@@ -126,13 +118,7 @@ class Mountain(Location):
         super().__init__(name="Misty Mountain", description="Massive Mountain Covered in Mist")
 
     def get_challenge(self):
-        return "You See a Troll in the Distance"
-
-    def add_character(self, character: Character):
-        print(f"{character.name} appears in the Misty Mountains with {character.health} health")
-
-    def remove_character(self, character: Character):
-        print(f"{character.name} removed from Misty Mountains")
+        print("There are luckily no enemies here, though it is very cold.")
 
 
 class Ruin(Location):
@@ -142,7 +128,6 @@ class Ruin(Location):
     def get_challenge(self):
         return "You see a bandit appear from around the corner. He sees you and starts charging towards you"
     
-
     def add_character(self, character: Character):
         print(f"{character.name} appears in Ancient Ruin with {character.health} health")
 
@@ -162,6 +147,7 @@ class Temple(Location):
 
     def remove_character(self, character: Character):
         print(f"{character.name} removed from Sacred Temple")
+
 
 def print_slow(text, delay=0.04):
     for char in text:
@@ -199,7 +185,6 @@ def main():
     visited_locations = set()
     collected_artifacts = set()
 
-
     while len(visited_locations) < len(locations):
         chosen_location = input("Choose Which Location You Want To Explore: Forest | Mountain | Ruin | Temple: ").lower()
         print()
@@ -211,7 +196,9 @@ def main():
             print_slow(f"*** LOCATION: {forest.name} ***")
             print_slow(f"*** DESCRIPTION: {forest.description} ***")
             print()
-            print_slow("You come to a clearing and to your surprise, Grishnook the goblin spots you from the treeline.")
+            print_slow("You come to a beautiful clearing. You hear some rustling in the distance.")
+            print()
+            forest.get_challenge()
             print_slow("He draws his sword and sprints towards you.")
             print()
 
@@ -251,13 +238,14 @@ def main():
                 break
                     
 
-
         if chosen_location == "mountain" and mountain not in visited_locations:
             visited_locations.add(mountain)
             print_slow(f"*** LOCATION: {mountain.name} ***")
             print_slow(f"*** DESCRIPTION: {mountain.description} ***")
             print()
             print_slow("""The high climb is refreshing, but fatigues you.""")
+            print()
+            mountain.get_challenge()
             print()
             print_slow("""You reach the summit, and there lies a spherical glass orb atop a flat boulder.""")
             print()
@@ -320,6 +308,7 @@ def main():
                     continue
                 break
 
+
         if chosen_location == "temple" and temple not in visited_locations:
             visited_locations.add(temple)
             print()
@@ -360,6 +349,7 @@ def main():
                 time.sleep(0.05)
                 print("Player's Inventory:", player.inventory)
                 print()
+
 
     available_locations = [location for location in locations if location not in visited_locations]
 
