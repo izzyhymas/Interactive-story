@@ -1,6 +1,23 @@
 import random
 import time
+import pygame
 from abc import ABC, abstractmethod
+
+pygame.init()
+
+forest_sound = pygame.mixer.Sound("Interactive-story/Is2sound files/forrest-sound.wav")
+mountain_sound = pygame.mixer.Sound("Interactive-story/Is2sound files/mountainsound.wav")
+ruins_sound = pygame.mixer.Sound("Interactive-story/Is2sound files/ruinssound.wav")
+temple_sound = pygame.mixer.Sound("Interactive-story/Is2sound files/temple-hymn.mp3")
+gobin_growl = pygame.mixer.Sound("Interactive-story/Is2sound files/goblin-sound.wav")
+archer_sound = pygame.mixer.Sound("Interactive-story/Is2sound files/archer-firing.wav")
+sword_draw = pygame.mixer.Sound("Interactive-story/Is2sound files/sword-draw.wav")
+sword_clash = pygame.mixer.Sound("Interactive-story/Is2sound files/sword-clash.wav")
+wizard_vanish = pygame.mixer.Sound("Interactive-story/Is2sound files/wizard-vanishing.wav")
+
+
+def play_sound(sound):
+    sound.play()
 
 class Player:
     def __init__(self, name):
@@ -12,8 +29,6 @@ class Player:
     def add_to_inventory(self, item):
         self.inventory.add(item)
 
-    def add_task(self, task):
-        self.tasks.append(task)
 
     def take_damage(self, damage):
         self.health -= damage
@@ -208,16 +223,20 @@ def main():
         if chosen_location == "forest" and forest not in visited_locations:
             visited_locations.add(forest)
             print()
+            play_sound(forest_sound)
             print_slow(f"*** LOCATION: {forest.name} ***")
             print_slow(f"*** DESCRIPTION: {forest.description} ***")
             print()
             print_slow("You come to a clearing and to your surprise, Grishnook the goblin spots you from the treeline.")
+            play_sound(gobin_growl)
             print_slow("He draws his sword and sprints towards you.")
+            play_sound(sword_draw)
             print()
 
             forest.add_character(goblin1)
 
             print()
+            play_sound(archer_sound)
             print_slow("""With less than a few feet remaining, three arrows impale the goblin""")
             print()
             forest.add_character(archer)
@@ -234,22 +253,27 @@ def main():
             artifact2.display_info()
             print()
         
-            user_input_forest = input(f"Would you like to add The {artifact2.name} to your inventory? Yes | No : ").lower()
-            print()
-
-            if user_input_forest == "yes":
-                player.add_to_inventory(artifact2.name)
-                print_slow(f"{player.name} has obtained The Blade of Shadows!")
-                print("Player's Inventory:", player.inventory)
+            while True:
+                user_input_forest = input(f"Would you like to add The {artifact2.name} to your inventory? Yes | No : ").lower()
                 print()
-            elif user_input_forest == "no":
-                print_slow("You leave the artifact and continue on your adventure.")
-            else:
-                print_slow("Invalid Input. Please enter Yes | No : ")
+
+                if user_input_forest == "yes":
+                    player.add_to_inventory(artifact2.name)
+                    print_slow(f"{player.name} has obtained The Blade of Shadows!")
+                    print("Player's Inventory:", player.inventory)
+                    print()
+                elif user_input_forest == "no":
+                    print_slow("You leave the artifact and continue on your adventure.")
+                else:
+                    print_slow("Invalid Input. Please enter Yes | No : ")
+                    continue
+                break
+                    
 
 
         if chosen_location == "mountain" and mountain not in visited_locations:
             visited_locations.add(mountain)
+            play_sound(mountain_sound)
             print_slow(f"*** LOCATION: {mountain.name} ***")
             print_slow(f"*** DESCRIPTION: {mountain.description} ***")
             print()
@@ -260,23 +284,27 @@ def main():
             artifact1.display_info()
             print()
         
-            user_input_mountain = input(f"Would you like to add The {artifact1.name} to your inventory? Yes | No : ").lower()
-            print()
-
-            if user_input_mountain == "yes":
-                player.add_to_inventory(artifact1.name)
-                print_slow(f"{player.name} has obtained The Orb of Truth!")
-                time.sleep(0.5)
-                print("Player's Inventory:", player.inventory)
+            while True:
+                user_input_mountain = input(f"Would you like to add The {artifact1.name} to your inventory? Yes | No : ").lower()
                 print()
-            elif user_input_mountain == "no":
-                print_slow("You leave the artifact and continue on your adventure.")
-            else:
-                print_slow("Invalid Input. Please enter Yes | No : ")
+
+                if user_input_mountain == "yes":
+                    player.add_to_inventory(artifact1.name)
+                    print_slow(f"{player.name} has obtained The Orb of Truth!")
+                    time.sleep(0.5)
+                    print("Player's Inventory:", player.inventory)
+                    print()
+                elif user_input_mountain == "no":
+                    print_slow("You leave the artifact and continue on your adventure.")
+                else:
+                    print_slow("Invalid Input. Please enter Yes | No : ")
+                    continue
+                break
 
 
         if chosen_location == "ruin" and ruin not in visited_locations:
             visited_locations.add(ruin)
+            play_sound(ruins_sound)
             print()
             print_slow(f"*** LOCATION: {ruin.name} ***")
             print_slow(f"*** DESCRIPTION: {ruin.description} ***")
@@ -286,33 +314,38 @@ def main():
             print()
 
             print_slow("Suddenly, a wizard cloaked in grey steps in front of you and casts a spell on the charging bandit.")
+            play_sound(wizard_vanish)
             ruin.add_character(wizard)
             print()
             wizard.cast_spell(bandit)
             print()
             print_slow("He tells you to tread lightly in these ruins, and vanishes with a poof into a cloud of smoke.")
+            play_sound(wizard_vanish)
             print_slow("As the smoke cloud disappears, you notice a strange object left where the wizard was standing.")
             print()
             artifact3.display_info()
             print()
 
-            user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
-            print()
-
-            if user_input_ruin == "yes":
-                player.add_to_inventory(artifact3.name)
-                print_slow(f"{player.name} has obtained The Goblet of Eternal Youth!")
-                time.sleep(0.5)
-                print("Player's Inventory:", player.inventory)
+            while True:
+                user_input_ruin = input(f"Would you like to add the {artifact3.name} to your inventory? Yes | No : ").lower()
                 print()
-            elif user_input_ruin == "no":
-                print_slow("You leave the artifact and continue on your adventure.")
-            else:
-                print_slow("Invalid Input. Please enter Yes | No : ")
 
+                if user_input_ruin == "yes":
+                    player.add_to_inventory(artifact3.name)
+                    print_slow(f"{player.name} has obtained The Goblet of Eternal Youth!")
+                    time.sleep(0.5)
+                    print("Player's Inventory:", player.inventory)
+                    print()
+                elif user_input_ruin == "no":
+                    print_slow("You leave the artifact and continue on your adventure.")
+                else:
+                    print_slow("Invalid Input. Please enter Yes | No : ")
+                    continue
+                break
 
         if chosen_location == "temple" and temple not in visited_locations:
             visited_locations.add(temple)
+            play_sound(temple_sound)
             print()
             print_slow(f"*** LOCATION: {temple.name} ***")
             print_slow(f"*** DESCRIPTION: {temple.description} ***")    
@@ -321,9 +354,11 @@ def main():
             print_slow("On the wall are strange petroglyphs, depicting goblins having dominion over the world.")
             print()
             print_slow(temple.get_challenge())
+            play_sound(sword_draw)
             print_slow("This time, you decide to handle it yourself.") 
             print()
             temple.add_character(goblin2)
+            play_sound(gobin_growl)
             print()
 
 
@@ -331,6 +366,7 @@ def main():
                 action = input("Choose One! Attack | Retreat: ").lower()
                 if action == "attack":
                     player.attack(goblin2)
+                    play_sound(sword_clash)
                     if not goblin2.defeated and random.random() < 0.7:
                         goblin2.attack_player(player)
                 elif action == "retreat":
